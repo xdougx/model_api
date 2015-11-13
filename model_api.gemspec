@@ -9,9 +9,8 @@ Gem::Specification.new do |spec|
   spec.authors       = ["Douglas Rossignolli"]
   spec.email         = ["douglas@kanamobi.com.br"]
 
-  spec.summary       = %q{TODO: Write a short summary, because Rubygems requires one.}
-  spec.description   = %q{TODO: Write a longer description or delete this line.}
-  spec.homepage      = "TODO: Put your gem's website or public repo URL here."
+  spec.summary       = %q{This ruby gem is an adpter for Kanamobi`s API}
+  spec.description   = %q{This ruby gem is an adpter for Kanamobi`s API}
   spec.license       = "MIT"
 
   # Prevent pushing this gem to RubyGems.org by setting 'allowed_push_host', or
@@ -30,7 +29,8 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency "bundler", "~> 1.10"
   spec.add_development_dependency "rake", "~> 10.0"
 
-  # spec.add_runtime_dependency ''
-  # spec.add_runtime_dependency ''
-  # spec.add_runtime_dependency ''
+  spec.add_runtime_dependency 'rest-client'
+  spec.add_runtime_dependency 'activemodel'
+  spec.add_runtime_dependency 'activesupport'
+  spec.add_runtime_dependency 'json'
 end

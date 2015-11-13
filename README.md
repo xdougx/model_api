@@ -1,8 +1,6 @@
 # ModelApi
 
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/model_api`. To experiment with that code, run `bin/console` for an interactive prompt.
-
-TODO: Delete this and the text above, and describe your gem
+This ruby gem is an adpter for Kanamobi`s API
 
 ## Installation
 
@@ -14,15 +12,40 @@ gem 'model_api'
 
 And then execute:
 
-    $ bundle
+    $ bundle install
 
-Or install it yourself as:
 
-    $ gem install model_api
+## Dependenies
+
 
 ## Usage
 
-TODO: Write usage instructions here
+Create your model based on the API with their attributes
+
+```
+class MyModel < ModelApi::Base
+  attr_accessor(:name, :email, :password, :role)
+
+  def attributes
+    {
+      name: name, 
+      email: email,
+      password: password,
+      role: role
+    }
+  end
+end
+```
+
+Now you can use the basic API methods
+
+```
+  my_model = MyModel.find(1)
+  puts my_model.name
+  => "Douglas"
+```
+
+
 
 ## Development
 
