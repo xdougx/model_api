@@ -6,7 +6,8 @@ This ruby gem is an adpter for Kanamobi`s API
 
 Add this line to your application's Gemfile:
 
-```ruby
+```
+#!ruby
 gem 'model_api'
 ```
 
@@ -23,6 +24,7 @@ And then execute:
 Create your model based on the API with their attributes
 
 ```
+#!ruby
 class MyModel < ModelApi::Base
   attr_accessor(:name, :email, :password, :role)
 
@@ -40,6 +42,7 @@ end
 Now you can use the basic API methods
 
 ```
+#!ruby
   my_model = MyModel.find(1)
   puts my_model.name
   => "Douglas"
