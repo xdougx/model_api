@@ -7,7 +7,7 @@ This ruby gem is an adpter for Kanamobi`s API
 Add this line to your application's Gemfile:
 
 ```ruby
-gem 'model_api', bitbucket: 'kanamobi/model_api'
+gem 'model_api', github: 'xdougx/model_api'
 ```
 
 And then execute:
