@@ -4,6 +4,8 @@ require 'active_support/concern'
 require 'rest_client'
 require 'httparty'
 
+# Namespace for this library, this library have the responsability to setup models and
+# call http requests in the API
 module ModelApi
 end
 

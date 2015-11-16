@@ -4,3 +4,4 @@ source 'https://rubygems.org'
 gemspec
 
 gem 'exceptions-resource', github: 'xdougx/exceptions-resource', require: 'exceptions'
+gem 'sdoc'

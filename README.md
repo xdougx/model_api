@@ -7,7 +7,7 @@ This ruby gem is an adpter for Kanamobi`s API
 Add this line to your application's Gemfile:
 
 ```ruby
-gem 'model_api'
+gem 'model_api', bitbucket: 'kanamobi/model_api'
 ```
 
 And then execute:
@@ -55,7 +55,7 @@ To install this gem onto your local machine, run `bundle exec rake install`. To 
 
 ## Contributing
 
-Bug reports and pull requests are welcome on GitHub at https://github.com/[USERNAME]/model_api. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [Contributor Covenant](contributor-covenant.org) code of conduct.
+Bug reports and pull requests are welcome on GitHub at https://bitbucket.org/kanamobi/model_api. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [Contributor Covenant](contributor-covenant.org) code of conduct.
 
 
 ## License

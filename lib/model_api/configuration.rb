@@ -1,5 +1,5 @@
 module ModelApi
-  # Configures global settings for Moip
+  # Configures global settings for ModelApi
   #   ModelApi.configure do |config|
   #     config.key = "secret"
   #     config.uuid = "secret"
@@ -14,14 +14,17 @@ module ModelApi
     yield(@config)
   end
 
-  # Global settings for Moip
+  # Global settings for ModelApi
   def self.config
     @config ||= ModelApi::Configuration.new
   end
 
+  # this configuration class has all attributes to configure the api url and authorizations params
   class Configuration
+    # principal attributes to execute an http request
     attr_accessor :uuid, :key, :url, :env
 
+    # constructor that set default values
     def initialize
       self.key = ""
       self.uuid = ""
