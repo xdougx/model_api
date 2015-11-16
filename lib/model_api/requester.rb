@@ -1,75 +1,106 @@
 module ModelApi
-  # the requester class have the object to call http requests in the configured url 
+  # the requester class have the object to
+  # call http requests in the configured url
+  # E.G.
+  # `ModelAPI::Requester.new(:get, "url", "url_params", {body: "data"})`
   class Requester
-    class << self
-      # call the url with GET method
-      def get(path, params = {})
-        RestClient.get(url(path, params), header) do |resource, request, result| 
-          resource = JSON.parse(resource)
-          return resource if ok?(resource) or invalid?(resource)
-          fail(Exceptions::Resource.build(resource["error"]))
-        end
-      end
+    # `method` is https request method could be `get`, `post`, `put` or `delete`
+    attr_accessor(:method)
+    # `path` is the url path to the request
+    attr_accessor(:path)
+    # `params` is url path params
+    attr_accessor(:params)
+    # `body` is content body for a post or put method
+    attr_accessor(:body)
+    # `resource` is response from a http request
+    attr_accessor(:resource)
+    # `request` is the request object from rest_client
+    attr_accessor(:request)
+    # `result` is status from the request
+    attr_accessor(:result)
 
-      # call the url with POST method
-      def post(path, body = {}, params = {})
-        RestClient.post(url(path, params), body, header) do |resource, request, result| 
-          resource = JSON.parse(resource)
-          return resource if ok?(result) or invalid?(resource) 
-          fail(Exceptions::Resource.build(resource["error"]))
-        end
-      end
+    # construct and execute a new request
+    def initialize(method, path, body = {}, params = {})
+      @method = method
+      @path = path
+      @body = body
+      @params = params
+      request
+      valid?
+    end
 
-      # call the url with PUT method
-      def put(path, body = {}, params = {})
-        RestClient.put(url(path, params), body, header) do |resource, request, result| 
-          resource = JSON.parse(resource)
-          return resource if ok?(resource) or invalid?(resource)
-          fail(Exceptions::Resource.build(resource["error"]))
-        end
-      end
+    # setup the resource, request and result data from a request
+    def setup(resource, request ,result)
+      @resource = JSON.parse(resource)
+      @request = request
+      @result = result
+    end
 
-      # call the url with DELETE method
-      def delete
-        RestClient.delete(url(path, params), header) do |resource, request, result| 
-          resource = JSON.parse(resource)
-          return resource if ok?(resource) or invalid?(resource)
-          fail(Exceptions::Resource.build(resource["error"]))
-        end
+    # call the url with GET method
+    def get
+      RestClient.get(url, header) do |rso, req, res|
+        setup(rso, req, res)
       end
+    end
 
-      # build the url request
-      def url(path, params = {})
-        url = "#{config.url[config.env]}/#{path}"
-        url = "#{url}?#{params.to_param}" unless params.empty?
-        url
+    # call the url with POST method
+    def post
+      RestClient.post(url, @body, header) do |rso, req, res|
+        setup(rso, req, res)
       end
+    end
 
-      # checkup if requests status is ok(200)
-      def ok?(result)
-        result.code.to_i == 200
+    # call the url with PUT method
+    def put
+      RestClient.put(url, @body, header) do |rso, req, res|
+        setup(ros, req, res)
       end
+    end
 
-      # checkup if the response has error key
-      def invalid?(resource)
-        resource.key?("error")
+    # call the url with DELETE method
+    def delete
+      RestClient.delete(url(path, params), header) do |rso, req, res|
+        setup(ros, req, res)
       end
+    end
 
-      # the header request as json with authorization
-      def header
-        { :Authorization => auth, :content_type => :json, :accept => :json }
-      end
+    # the header request as json with authorization
+    def header
+      { Authorization: auth, content_type: :json, accept: :json }
+    end
 
-      # return the config_api object
-      def config
-        ModelApi.config
-      end
-      # create the base64 authentication
-      def auth
-        auth = Base64.strict_encode64("#{config.uuid}:#{config.key}")
-        "Basic #{auth}"
-      end
+    # create the base64 authentication
+    def auth
+      "Basic #{Base64.strict_encode64("#{config.uuid}:#{config.key}")}"
+    end
 
+    # return the config_api object
+    def config
+      ModelApi.config
+    end
+
+    # build the url request
+    def url
+      url = "#{config.url[config.env]}/#{@path}"
+      url = "#{url}?#{@params.to_param}" unless @params.empty?
+      url
+    end
+
+    # checkup if requests status is ok(200)
+    def ok?
+      @result.code.to_i == 200
+    end
+
+    # checkup if has error key in the response
+    def error?
+      @response.key?("error")
+    end
+
+    # raise error if isnt ok or has error key
+    def valid?
+      unless(ok? or error?)
+        fail(Exceptions::Resource.build(@response['error']))
+      end
     end
   end
 end
