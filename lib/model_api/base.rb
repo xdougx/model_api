@@ -100,6 +100,7 @@ module ModelApi
         build(resource)
       end
 
+      # [GET] /model_pluralized/find_by
       # method to call find by attributes
       def find_by(attributes = {}, options = {})
         search = { search: attributes }.merge!(options)
@@ -109,6 +110,7 @@ module ModelApi
         end
       end
 
+      # [GET] /model_pluralized/find_by_name
       # method to call find by name in the api
       def find_by_name(params)
         resource = @@requester.get("#{to_url}/find_by_name", params)
@@ -117,6 +119,7 @@ module ModelApi
         end
       end
 
+      # [GET] /model_pluralized/id
       # this method recover an object by id
       def find(id, params = {})
         resource = @@requester.get("#{to_url}/#{id}", params)

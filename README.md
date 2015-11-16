@@ -46,6 +46,9 @@ Now you can use the basic API methods
 ```
 
 
+## Documentation
+
+to build the documentation just run `sdoc`
 
 ## Development
 
