@@ -76,7 +76,7 @@ module ModelApi
       # that responds to, receive an hash as parameter
       def build(params)
         return new(params) if params.is_a?(Hash)
-        fail("unexpected parameter, expected Hash, received #{params.class}")
+        raise("unexpected parameter, expected Hash, received #{params.class}")
       end
 
       # [GET] /model_pluralized
