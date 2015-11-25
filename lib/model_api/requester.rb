@@ -94,7 +94,7 @@ module ModelApi
 
     # checkup if requests status is ok(200)
     def ok?
-      @result.code.to_i == 200
+      @result.code.to_i != 200
     end
 
     # checkup if has error key in the response
@@ -108,9 +108,12 @@ module ModelApi
       puts @result.code
       puts @resource.key?("error")
       puts "*/*/*/*/*/"
-      unless(ok? or error?)
-        fail(Exceptions::Resource.build(@resource['error']))
-      end
+
+      raise_error(@resource['error']) if ok? || error?
+    end
+
+    def raise_error(error)
+      fail(Exceptions::Resource.build(error))
     end
   end
 end
