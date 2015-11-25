@@ -11,7 +11,7 @@ module ModelApi
   #     }
   #   end
   def self.configure(&_block)
-    yield(@config)
+    yield(config())
   end
 
   # Global settings for ModelApi
