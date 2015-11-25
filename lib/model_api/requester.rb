@@ -26,11 +26,12 @@ module ModelApi
       @body = body
       @params = params
       run
+      ap self.as_json
       valid?
     end
 
     protected
-    
+
     def run
       send(@method)
     end
