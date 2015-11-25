@@ -59,7 +59,7 @@ module ModelApi
 
     # call the url with PUT method
     def put
-      RestClient.put( , @body, header) do |rso, req, res|
+      RestClient.put(url, @body, header) do |rso, req, res|
         setup(rso, req, res)
       end
     end
