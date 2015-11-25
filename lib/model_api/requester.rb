@@ -53,14 +53,14 @@ module ModelApi
     # call the url with PUT method
     def put
       RestClient.put(url, @body, header) do |rso, req, res|
-        setup(ros, req, res)
+        setup(rso, req, res)
       end
     end
 
     # call the url with DELETE method
     def delete
       RestClient.delete(url(path, params), header) do |rso, req, res|
-        setup(ros, req, res)
+        setup(rso, req, res)
       end
     end
 
