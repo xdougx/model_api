@@ -26,7 +26,6 @@ module ModelApi
       @body = body
       @params = params
       run
-      ap self.as_json
       valid?
     end
 
