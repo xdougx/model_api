@@ -25,12 +25,16 @@ module ModelApi
       @path = path
       @body = body
       @params = params
-      request
+      run
       valid?
     end
 
+    def run
+      send(@method)
+    end
+
     # setup the resource, request and result data from a request
-    def setup(resource, request ,result)
+    def setup(resource, request, result)
       @resource = JSON.parse(resource)
       @request = request
       @result = result
@@ -52,7 +56,7 @@ module ModelApi
 
     # call the url with PUT method
     def put
-      RestClient.put(url, @body, header) do |rso, req, res|
+      RestClient.put( , @body, header) do |rso, req, res|
         setup(rso, req, res)
       end
     end
