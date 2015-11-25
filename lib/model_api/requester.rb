@@ -99,13 +99,13 @@ module ModelApi
 
     # checkup if has error key in the response
     def error?
-      @response.key?("error")
+      @resource.key?("error")
     end
 
     # raise error if isnt ok or has error key
     def valid?
       unless(ok? or error?)
-        fail(Exceptions::Resource.build(@response['error']))
+        fail(Exceptions::Resource.build(@resource['error']))
       end
     end
   end
