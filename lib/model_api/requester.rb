@@ -104,11 +104,6 @@ module ModelApi
 
     # raise error if isnt ok or has error key
     def valid?
-      puts "*/*/*/*/*/"
-      puts @result.code
-      puts @resource.key?("error")
-      puts "*/*/*/*/*/"
-
       raise_error(@resource['error']) if ok? || error?
     end
 
