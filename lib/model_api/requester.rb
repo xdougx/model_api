@@ -2,7 +2,7 @@ module ModelApi
   # the requester class have the object to
   # call http requests in the configured url
   # E.G.
-  # `ModelAPI::Requester.new(:get, "url", "url_params", {body: "data"})`
+  #     ModelAPI::Requester.new(:get, "url", "url_params", {body: "data"})
   class Requester
     # `method` is https request method could be `get`, `post`, `put` or `delete`
     attr_accessor(:method)

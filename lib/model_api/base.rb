@@ -90,14 +90,14 @@ module ModelApi
 
       # [GET] /model_pluralized
       # method to recovery all objects from an index with pagination source
-      # `{ objects: [],
-      #    pagination:  {
-      #      current_page: page,
-      #      total_objects: count,
-      #      per_page: per_page,
-      #      total_pages: total_pages(per_page)
+      #    { objects: [],
+      #      pagination:  {
+      #        current_page: page,
+      #        total_objects: count,
+      #        per_page: per_page,
+      #        total_pages: total_pages(per_page)
+      #     }
       #   }
-      # }`
       def all_with_pagination(params = {})
         resource = requester.new(:get, to_url, nil, params)
         resource['objects'] = resource['objects'].map do |attrs|
