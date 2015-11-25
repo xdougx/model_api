@@ -29,6 +29,8 @@ module ModelApi
       valid?
     end
 
+    protected
+    
     def run
       send(@method)
     end
