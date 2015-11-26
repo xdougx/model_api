@@ -82,7 +82,7 @@ module ModelApi
       def all(params = {})
         request = requester.new(:get, to_url, nil, params)
         request.resource.map do |model|
-          array << build(model)
+          build(model)
         end
       end
 
