@@ -99,6 +99,7 @@ module ModelApi
 
     # checkup if has error key in the response
     def error?
+      return if @resource.is_a?(Array)
       @resource.key?("error")
     end
 
