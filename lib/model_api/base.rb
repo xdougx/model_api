@@ -34,7 +34,7 @@ module ModelApi
     # [PUT] /model_pluralized/:id
     # call the api method and updates the objects
     def update(params)
-      request = requester.new(:put, "#{to_url}/#{id}", params).resource
+      request = requester.new(:put, "#{to_url}/#{id}", params)
       parameters(request.resource)
     end
 
