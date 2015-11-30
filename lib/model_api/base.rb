@@ -4,6 +4,7 @@ module ModelApi
   # Model API Base is the principal class to create an model
   class Base
     include ActiveModel::Model
+    include ActiveModel::Serialization
 
     # the requester is a proxy to the Requester Class
     REQUESTER = ModelApi::Requester
