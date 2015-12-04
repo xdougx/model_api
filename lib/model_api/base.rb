@@ -134,7 +134,7 @@ module ModelApi
       # [GET] /model_pluralized/id
       # this method recover an object by id
       def find(id, params = {})
-        request = requester.new(:get, "#{to_url}/#{id}", params)
+        request = requester.new(:get, "#{to_url}/#{id}", nil, params)
         build(request.resource)
       end
 
