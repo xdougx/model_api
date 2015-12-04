@@ -6,6 +6,8 @@ module ModelApi
     include ActiveModel::Model
     include ActiveModel::Serialization
 
+    attr_accessor :created_at, :updated_at
+
     # the requester is a proxy to the Requester Class
     REQUESTER = ModelApi::Requester
 
@@ -68,6 +70,14 @@ module ModelApi
     # build the url name for the model namespace
     def to_param_namespace
       self.class.to_param_namespace
+    end
+
+    def created_at=(value)
+      @created_at = Time.parse(value)
+    end
+
+    def updated_at=(value)
+      @updated_at = Time.parse(value)
     end
 
     class << self
