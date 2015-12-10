@@ -65,7 +65,7 @@ module ModelApi
 
     # call the url with DELETE method
     def delete
-      RestClient.delete(url(path, params), header) do |rso, req, res|
+      RestClient.delete(url, params), header) do |rso, req, res|
         setup(rso, req, res)
       end
     end

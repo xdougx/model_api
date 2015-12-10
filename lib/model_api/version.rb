@@ -1,4 +1,4 @@
 module ModelApi
   # current gem version
-  VERSION = '0.1.2p19'
+  VERSION = '0.1.4'
 end
