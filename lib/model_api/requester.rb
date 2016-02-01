@@ -22,12 +22,12 @@ module ModelApi
     attr_accessor(:header)
 
     # construct and execute a new request
-    def initialize(method, path, body = {}, params = {})
+    def initialize(method, path, body = {}, params = {}, header = {})
       @method = method
       @path = path
       @body = body
       @params = params
-      @header = { Authorization: auth, content_type: :json, accept: :json }
+      setup_header(header)
       run
       valid?
     end
@@ -93,6 +93,12 @@ module ModelApi
       url = "#{config.url[config.env]}/#{@path}"
       url = "#{url}?#{@params.to_param}" unless @params.empty?
       url
+    end
+
+    def setup_header(header = {})
+      @header = { Authorization: auth, content_type: :json, accept: :json }
+      @header.merge!(header) if !header.empty? or header.nil?
+      @header
     end
 
     # checkup if requests status is ok(200)

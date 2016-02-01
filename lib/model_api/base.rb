@@ -36,23 +36,23 @@ module ModelApi
 
     # [PUT] /model_pluralized/:id
     # call the api method and updates the objects
-    def update(params)
-      request = requester.new(:put, "#{to_url}/#{id}", params)
+    def update(body, params = {}, header = {})
+      request = requester.new(:put, "#{to_url}/#{id}", body, params, header)
       parameters(request.resource)
     end
 
     # [PUT] model_pluralized/:model_id/archive
     # call the api method and updates the object to an `archived` state
     # atualiza o status do objeto para 'archived'
-    def archive(params = {})
-      request = requester.new(:put, "#{to_url}/#{id}/archive", params)
+    def archive(body = {}, params = {}, header = {})
+      request = requester.new(:put, "#{to_url}/#{id}/archive", body, params, header)
       parameters(request.resource)
     end
 
     # [PUT] /model_pluralized/:model_id/active
     # call the api method and updates the object to an `archived` state
-    def active(params = {})
-      request = requester.new(:put, "#{to_url}/#{id}/active", params)
+    def active(body = {}, params = {}, header = {})
+      request = requester.new(:put, "#{to_url}/#{id}/active", body, params, header)
       parameters(request.resource)
     end
 
@@ -91,8 +91,8 @@ module ModelApi
 
       # [GET] /model_pluralized
       # method to recovery all objects from an index
-      def all(params = {})
-        request = requester.new(:get, to_url, nil, params)
+      def all(params = {}, header = {})
+        request = requester.new(:get, to_url, nil, params, header)
         request.resource.map do |model|
           build(model)
         end
@@ -108,8 +108,8 @@ module ModelApi
       #        total_pages: total_pages(per_page)
       #     }
       #   }
-      def all_with_pagination(params = {})
-        request = requester.new(:get, to_url, nil, params)
+      def all_with_pagination(params = {}, header = {})
+        request = requester.new(:get, to_url, nil, params, header)
         request.resource['objects'] = request.resource['objects'].map do |attrs|
           request.resource['objects'] = new(attrs)
         end
@@ -118,16 +118,16 @@ module ModelApi
 
       # [POST] /model_pluralized
       # method to create an object in the api
-      def create(params)
-        request = requester.new(:post, to_url, params)
+      def create(body, params = {}, header = {})
+        request = requester.new(:post, to_url, body, params, header)
         build(request.resource)
       end
 
       # [GET] /model_pluralized/find_by
       # method to call find by attributes
-      def find_by(attributes = {}, options = {})
+      def find_by(attributes = {}, options = {}, header = {})
         search = { search: attributes }.merge!(options)
-        request = requester.new(:get, "#{to_url}/find_by", search)
+        request = requester.new(:get, "#{to_url}/find_by", nil, search, header)
         request.resource.map do |element|
           build(element)
         end
@@ -135,8 +135,8 @@ module ModelApi
 
       # [GET] /model_pluralized/find_by_name
       # method to call find by name in the api
-      def find_by_name(params)
-        request = requester.new(:get, "#{to_url}/find_by_name", params)
+      def find_by_name(params, header = {})
+        request = requester.new(:get, "#{to_url}/find_by_name", {}, params, header)
         request.resource.map do |model|
           build(model)
         end
@@ -144,8 +144,8 @@ module ModelApi
 
       # [GET] /model_pluralized/id
       # this method recover an object by id
-      def find(id, params = {})
-        request = requester.new(:get, "#{to_url}/#{id}", nil, params)
+      def find(id, params = {}, header = {})
+        request = requester.new(:get, "#{to_url}/#{id}", nil, params, header)
         build(request.resource)
       end
 
