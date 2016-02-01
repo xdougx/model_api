@@ -73,11 +73,6 @@ module ModelApi
       end
     end
 
-    # the header request as json with authorization
-    def header
-      
-    end
-
     # create the base64 authentication
     def auth
       "Basic #{Base64.strict_encode64("#{config.uuid}:#{config.key}")}"
