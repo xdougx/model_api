@@ -18,6 +18,8 @@ module ModelApi
     attr_accessor(:request)
     # `result` is status from the request
     attr_accessor(:result)
+    # `header` is the http request header
+    attr_accessor(:header)
 
     # construct and execute a new request
     def initialize(method, path, body = {}, params = {})
@@ -25,6 +27,7 @@ module ModelApi
       @path = path
       @body = body
       @params = params
+      @header = { Authorization: auth, content_type: :json, accept: :json }
       run
       valid?
     end
@@ -72,7 +75,7 @@ module ModelApi
 
     # the header request as json with authorization
     def header
-      { Authorization: auth, content_type: :json, accept: :json }
+      
     end
 
     # create the base64 authentication

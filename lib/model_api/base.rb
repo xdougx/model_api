@@ -44,17 +44,18 @@ module ModelApi
     # [PUT] model_pluralized/:model_id/archive
     # call the api method and updates the object to an `archived` state
     # atualiza o status do objeto para 'archived'
-    def archive(params)
+    def archive(params = {})
       request = requester.new(:put, "#{to_url}/#{id}/archive", params)
       parameters(request.resource)
     end
 
     # [PUT] /model_pluralized/:model_id/active
     # call the api method and updates the object to an `archived` state
-    def active(params)
+    def active(params = {})
       request = requester.new(:put, "#{to_url}/#{id}/active", params)
       parameters(request.resource)
     end
+
 
     # check if the object is active
     # @return [Boolean]
