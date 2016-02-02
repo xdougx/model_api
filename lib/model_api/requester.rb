@@ -47,28 +47,28 @@ module ModelApi
 
     # call the url with GET method
     def get
-      RestClient.get(url, header) do |rso, req, res|
+      RestClient.get(url, @header) do |rso, req, res|
         setup(rso, req, res)
       end
     end
 
     # call the url with POST method
     def post
-      RestClient.post(url, @body, header) do |rso, req, res|
+      RestClient.post(url, @body, @header) do |rso, req, res|
         setup(rso, req, res)
       end
     end
 
     # call the url with PUT method
     def put
-      RestClient.put(url, @body, header) do |rso, req, res|
+      RestClient.put(url, @body, @header) do |rso, req, res|
         setup(rso, req, res)
       end
     end
 
     # call the url with DELETE method
     def delete
-      RestClient.delete(url, header) do |rso, req, res|
+      RestClient.delete(url, @header) do |rso, req, res|
         setup(rso, req, res)
       end
     end
