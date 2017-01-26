@@ -8,6 +8,14 @@ module ModelApi
 
     attr_accessor :created_at, :updated_at
 
+    attr_accessor *ATTRIBUTES.delete_if {|attr| attr.match /created_at|updated_at/ }
+  
+    def attributes
+      @attributes ||= ATTRIBUTES.each_with_object({}) do |attr, attrs|
+        attrs[attr] = send(attr)
+      end
+    end
+
     # the requester is a proxy to the Requester Class
     REQUESTER = ModelApi::Requester
 
