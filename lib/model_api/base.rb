@@ -85,10 +85,11 @@ module ModelApi
 
       def define_attributes(*attributes)
         class_eval do
+          with_timestamp = attributes.clone
           attr_accessor *attributes.delete_if {|attr| attr.match /created_at|updated_at/ }
 
           define_method(:attributes) do
-            @attributes ||= attributes.each_with_object({}) do |attr, attrs|
+            @attributes ||= with_timestamp.each_with_object({}) do |attr, attrs|
               attrs[attr] = send(attr)
             end
           end
