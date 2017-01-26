@@ -8,15 +8,6 @@ module ModelApi
 
     attr_accessor :created_at, :updated_at
 
-    attr_accessor *ATTRIBUTES.delete_if {|attr| attr.match /created_at|updated_at/ } if defined?(ATTRIBUTES)
-  
-    def attributes
-      return {} unless defined?(ATTRIBUTES)
-      @attributes ||= ATTRIBUTES.each_with_object({}) do |attr, attrs|
-        attrs[attr] = send(attr)
-      end
-    end
-
     # the requester is a proxy to the Requester Class
     REQUESTER = ModelApi::Requester
 
@@ -91,6 +82,19 @@ module ModelApi
     end
 
     class << self
+
+      def define_attributes(*attributes)
+        class_eval do
+          attr_accessor attributes.delete_if {|attr| attr.match /created_at|updated_at/ }
+
+          define_method(:attributes) do
+            @attributes ||= attributes.each_with_object({}) do |attr, attrs|
+              attrs[attr] = send(attr)
+            end
+          end
+        end
+      end
+
       # method to create an object and setup the attributes
       # that responds to, receive an hash as parameter
       def build(params)
