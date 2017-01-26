@@ -85,7 +85,7 @@ module ModelApi
 
       def define_attributes(*attributes)
         class_eval do
-          attr_accessor attributes.delete_if {|attr| attr.match /created_at|updated_at/ }
+          attr_accessor *attributes.delete_if {|attr| attr.match /created_at|updated_at/ }
 
           define_method(:attributes) do
             @attributes ||= attributes.each_with_object({}) do |attr, attrs|
