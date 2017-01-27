@@ -10,4 +10,5 @@ end
 
 require 'model_api/configuration'
 require 'model_api/requester'
+require 'model_api/relations'
 require 'model_api/base'
