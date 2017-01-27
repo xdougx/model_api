@@ -5,7 +5,7 @@ module ModelApi
   class Base
     include ActiveModel::Model
     include ActiveModel::Serialization
-    include Relations
+    extend Relations::ClassMethods
 
     attr_accessor :created_at, :updated_at
 

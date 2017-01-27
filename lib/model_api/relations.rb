@@ -1,5 +1,4 @@
 module Relations
-  extend ActiveSupport::Concerns
 
   module ClassMethods
     def belongs_to(relation_name, options = {})
