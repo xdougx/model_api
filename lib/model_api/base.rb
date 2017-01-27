@@ -31,9 +31,6 @@ module ModelApi
     # @param [Hash] params
     def parameters(params)
       params.each do |key, value|
-        ap key
-        ap value
-        ap respond_to?(key)
         send("#{key}=".to_sym, value) if self.respond_to?(key)
       end
     end
