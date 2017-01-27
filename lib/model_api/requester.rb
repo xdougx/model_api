@@ -92,7 +92,7 @@ module ModelApi
 
     def setup_header(header = {})
       @header = { Authorization: auth, content_type: :json, accept: :json }
-      @header.merge!(header) if !header.empty? or header.nil?
+      @header.merge!(header) if !header.empty? or header.blank?
       @header
     end
 

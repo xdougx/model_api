@@ -15,7 +15,7 @@ module Relations
 
     def define_setter(relation_name, klass)
       define_method("#{relation_name}=") do |args|
-        instance_variable_set(relation_name, klass.build(args))
+        instance_variable_set("@#{relation_name}", klass.build(args))
       end
     end
 
