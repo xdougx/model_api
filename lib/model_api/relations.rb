@@ -25,7 +25,7 @@ module Relations
       end
     end
 
-    def get_relation_class(relations_name, options = {})
+    def get_relation_class(relation_name, options = {})
       klass = options[:class_name] ? options[:class_name] : relation_name.camelize
       defined?(klass) ? klass.constantize : raise_class_not_defined(klass)
     end
