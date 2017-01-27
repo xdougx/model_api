@@ -14,13 +14,13 @@ module Relations
     private 
 
     def define_setter(relation_name, klass)
-        define_method("#{relation_name}=", args) do
-          instance_variable_set(relation_name, klass.build(args))
-        end
+      define_method("#{relation_name}=", args) do |args|
+        instance_variable_set(relation_name, klass.build(args))
+      end
     end
 
     def define_getter(relation_name, klass)
-      define_method(relation_name) do
+      define_method(relation_name) do 
         instance_variable_get(:"@#{relation_name}") || klass.new
       end
     end
