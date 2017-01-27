@@ -31,7 +31,10 @@ module ModelApi
     # @param [Hash] params
     def parameters(params)
       params.each do |key, value|
-        send("#{key}=".to_sym, value) if self.respond_to? key
+        ap key
+        ap value
+        ap respond_to?(key)
+        send("#{key}=".to_sym, value) if self.respond_to?(key)
       end
     end
 
@@ -69,7 +72,7 @@ module ModelApi
       self.class.to_url
     end
 
-    # build the url name for the model namespace
+    # build the url name for the mđodel namespace
     def to_param_namespace
       self.class.to_param_namespace
     end
