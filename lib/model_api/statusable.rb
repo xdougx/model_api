@@ -15,7 +15,7 @@ module Statusable
 
     def change_status(new_status, url = nil, header = {})
       if available_status?(new_status)
-        request_status_change(urget_status_url(url, new_status)l, header)
+        request_status_change(get_status_url(url, new_status)l, header)
       else
         raise_status_not_found
       end
