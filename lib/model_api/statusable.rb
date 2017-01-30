@@ -11,6 +11,19 @@ module Statusable
     
     private
 
+    def get_status_url(url)
+      url.blank? ? "#{to_url}/#{id}/#{status}" : url
+    end
+
+    def raise_status_not_found
+      fail "Status não definido"
+    end
+
+    def request_status_change(url, header)
+      request = requester.new(:get, url, {}, {}, header)
+      parameters(request.resource)
+    end
+    
     def define_status_check(statuses = [])
       define_method(:available_status?) do |status|
         statuses.include?(status)
@@ -29,18 +42,8 @@ module Statusable
       end
     end
 
-    def get_status_url(url)
-      url.blank? ? "#{to_url}/#{id}/#{status}" : url
-    end
 
-    def request_status_change(url, header)
-      request = requester.new(:get, url, {}, {}, header)
-      parameters(request.resource)
-    end
 
-    def raise_status_not_found
-      fail "Status não definido"
-    end
 
   end
 end
