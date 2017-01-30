@@ -3,9 +3,20 @@ module Statusable
     
     def define_statuses(*statuses)
       statuses.each { |status| define_status_method(status) }
+      define_status_check(statuses)
     end
     
     private
+
+    def define_status_check(statuses = [])
+      define_method(:available_status?) do |status|
+        statuses.include?(status)
+      end
+
+      define_method(:change_status) do |new_status, url: nil, header: {}|
+        available_status?(new_status) ? send(new_status, url, header) : raise_status_not_found
+      end
+    end
 
     def define_status_method(status)
       class_eval do
