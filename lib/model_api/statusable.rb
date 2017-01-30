@@ -4,10 +4,6 @@ module Statusable
       url.blank? ? "#{to_url}/#{id}/#{sts_method}" : url
     end
 
-    def get_collection_url(url, method_pluralized)
-      url.blank? ? "#{to_url}/#{method_pluralized}" : url
-    end
-
     def raise_status_not_found
       fail "Status não definido"
     end
@@ -55,6 +51,10 @@ module Statusable
       define_singleton_method(method_pluralized) do |url: nil, param: {}, header: {}|
         request_collection(get_collection_url(url, method_pluralized), param, header)
       end
+    end
+
+    def get_collection_url(url, method_pluralized)
+      url.blank? ? "#{to_url}/#{method_pluralized}" : url
     end
 
     def define_status_check(statuses = [])
