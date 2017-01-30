@@ -22,9 +22,8 @@ module Statusable
   module ClassMethods
     def define_statuses(*statuses)
       class_eval do
-        statuses.each { |status| define_status_method(status) }
         define_status_check(statuses)
-        define_change_status
+        statuses.each { |status| define_status_method(status) }
       end
     end
     
