@@ -4,6 +4,10 @@ module Statusable
       url.blank? ? "#{to_url}/#{id}/#{sts_method}" : url
     end
 
+    def get_collection_url(url, method_pluralized)
+      url.blank? ? "#{to_url}/#{method_pluralized}" : url
+    end
+
     def raise_status_not_found
       fail "Status não definido"
     end
@@ -11,6 +15,12 @@ module Statusable
     def request_status_change(url, header)
       request = requester.new(:get, url, {}, {}, header)
       parameters(request.resource)
+    end
+
+    def request_collection(url, params, header)
+      request = requester.new(:get, url, {}, params, header)
+      request.resource['objects'] = request.resource['objects'].map { |param| build(param) }
+      request.resource
     end
 
     def change_status(new_status, url = nil, header = {})
@@ -28,6 +38,7 @@ module Statusable
     def define_statuses(*statuses)
       class_eval do
         statuses.each { |sts_method| define_status_method(sts_method) }
+        statuses.each { |sts_method| define_collection_method(sts_method.pluralize) }
         define_status_check(statuses)
       end
     end
@@ -37,6 +48,12 @@ module Statusable
     def define_status_method(sts_method)
       define_method(sts_method.to_sym) do |url: nil, header: {}|
         request_status_change(get_status_url(url, sts_method), header)
+      end
+    end
+
+    def define_collection_method(method_pluralized)
+      define_method(method_pluralized) do |url: nil, param: {}, header: {}|
+        request_collection(get_collection_url(url, method_pluralized), param, header)
       end
     end
 
