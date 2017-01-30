@@ -13,12 +13,6 @@ module Statusable
       parameters(request.resource)
     end
 
-    def request_collection(url, params, header)
-      request = requester.new(:get, url, {}, params, header)
-      request.resource['objects'] = request.resource['objects'].map { |param| build(param) }
-      request.resource
-    end
-
     def change_status(new_status, url = nil, header = {})
       if available_status?(new_status)
         url = get_status_url(url, new_status)
@@ -55,6 +49,12 @@ module Statusable
 
     def get_collection_url(url, method_pluralized)
       url.blank? ? "#{to_url}/#{method_pluralized}" : url
+    end
+
+    def request_collection(url, params, header)
+      request = requester.new(:get, url, {}, params, header)
+      request.resource['objects'] = request.resource['objects'].map { |param| build(param) }
+      request.resource
     end
 
     def define_status_check(statuses = [])
