@@ -13,6 +13,10 @@ module Statusable
       parameters(request.resource)
     end
 
+    def change_status(new_status, url = nil, header = {})
+      available_status?(new_status) ? send(new_status, url, header) : raise_status_not_found
+    end
+
   end
 
   module ClassMethods
@@ -26,22 +30,17 @@ module Statusable
     
     private
 
+    def define_status_method(status)
+      define_method(status) do |url: nil, header: {}|
+        request_status_change(get_status_url(url), header)
+      end
+    end
+
     def define_status_check(statuses = [])
       define_method(:available_status?) do |status|
         statuses.include?(status)
       end
     end
 
-    def define_change_status
-      define_method(:change_status) do |new_status: nil, url: nil, header: {}|
-        available_status?(new_status) ? send(new_status, url, header) : raise_status_not_found
-      end
-    end
-
-    def define_status_method(status)
-      define_method(status) do |url: nil, header: {}|
-        request_status_change(get_status_url(url), header)
-      end
-    end
   end
 end
