@@ -6,6 +6,7 @@ module ModelApi
     include ActiveModel::Model
     include ActiveModel::Serialization
     extend Relations::ClassMethods
+    include Statusable::Methods
     extend Statusable::ClassMethods
 
     attr_accessor :created_at, :updated_at

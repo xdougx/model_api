@@ -1,16 +1,5 @@
 module Statusable
-  module ClassMethods
-    
-    def define_statuses(*statuses)
-      class_eval do
-        statuses.each { |status| define_status_method(status) }
-        define_status_check(statuses)
-        define_change_status
-      end
-    end
-    
-    private
-
+  module Methods
     def get_status_url(url)
       url.blank? ? "#{to_url}/#{id}/#{status}" : url
     end
@@ -23,7 +12,20 @@ module Statusable
       request = requester.new(:get, url, {}, {}, header)
       parameters(request.resource)
     end
+
+  end
+
+  module ClassMethods
+    def define_statuses(*statuses)
+      class_eval do
+        statuses.each { |status| define_status_method(status) }
+        define_status_check(statuses)
+        define_change_status
+      end
+    end
     
+    private
+
     def define_status_check(statuses = [])
       define_method(:available_status?) do |status|
         statuses.include?(status)
@@ -41,9 +43,5 @@ module Statusable
         request_status_change(get_status_url(url), header)
       end
     end
-
-
-
-
   end
 end
