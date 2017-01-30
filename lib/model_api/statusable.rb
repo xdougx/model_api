@@ -1,7 +1,7 @@
 module Statusable
   module Methods
-    def get_status_url(url, status)
-      url.blank? ? "#{to_url}/#{id}/#{status}" : url
+    def get_status_url(url, sts_method)
+      url.blank? ? "#{to_url}/#{id}/#{sts_method}" : url
     end
 
     def raise_status_not_found
@@ -21,24 +21,24 @@ module Statusable
 
   module ClassMethods
     def define_statuses(*statuses)
-      statuses.each { |status| define_status_method(status) }
+      statuses.each { |sts_method| define_status_method(sts_method) }
       define_status_check(statuses)
     end
     
     private
 
-    def define_status_method(status)
+    def define_status_method(sts_method)
       class_eval do
-        define_method(status) do |url: nil, header: {}|
-          request_status_change(get_status_url(url, status), header)
+        define_method(sts_method) do |url: nil, header: {}|
+          request_status_change(get_status_url(url, sts_method), header)
         end
       end
     end
 
     def define_status_check(statuses = [])
       class_eval do
-        define_method(:available_status?) do |status|
-          statuses.include?(status)
+        define_method(:available_status?) do |sts_method|
+          statuses.include?(sts_method)
         end
       end
     end
