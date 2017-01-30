@@ -18,7 +18,7 @@ module Statusable
     end
 
     def define_change_status
-      define_method(:change_status) do |new_status, url: nil, header: {}|
+      define_method(:change_status) do |new_status: nil, url: nil, header: {}|
         available_status?(new_status) ? send(new_status, url, header) : raise_status_not_found
       end
     end
