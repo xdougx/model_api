@@ -42,7 +42,7 @@ module Statusable
     end
 
     def define_collection_method(method_pluralized)
-      define_singleton_method(method_pluralized) do |url, param, header|
+      define_singleton_method(method_pluralized) do |url=nil, param={}, header={}|
         request_collection(get_collection_url(url, method_pluralized), param, header)
       end
     end
