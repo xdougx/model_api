@@ -14,7 +14,11 @@ module Statusable
     end
 
     def change_status(new_status, url = nil, header = {})
-      available_status?(new_status) ? send(new_status, url, header) : raise_status_not_found
+      if available_status?(new_status)
+        request_status_change(urget_status_url(url, new_status)l, header)
+      else
+        raise_status_not_found
+      end
     end
 
   end
@@ -29,7 +33,7 @@ module Statusable
 
     def define_status_method(sts_method)
       class_eval do
-        define_method(sts_method) do |url: nil, header: {}|
+        define_method(sts_method.to_sym) do |url: nil, header: {}|
           request_status_change(get_status_url(url, sts_method), header)
         end
       end
