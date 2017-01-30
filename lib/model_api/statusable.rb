@@ -26,25 +26,23 @@ module Statusable
 
   module ClassMethods
     def define_statuses(*statuses)
-      statuses.each { |sts_method| define_status_method(sts_method) }
-      define_status_check(statuses)
+      class_eval do
+        statuses.each { |sts_method| define_status_method(sts_method) }
+        define_status_check(statuses)
+      end
     end
     
     private
 
     def define_status_method(sts_method)
-      class_eval do
-        define_method(sts_method.to_sym) do |url: nil, header: {}|
-          request_status_change(get_status_url(url, sts_method), header)
-        end
+      define_method(sts_method.to_sym) do |url: nil, header: {}|
+        request_status_change(get_status_url(url, sts_method), header)
       end
     end
 
     def define_status_check(statuses = [])
-      class_eval do
-        define_method(:available_status?) do |sts_method|
-          statuses.include?(sts_method)
-        end
+      define_method(:available_status?) do |sts_method|
+        statuses.include?(sts_method)
       end
     end
   end
