@@ -29,7 +29,7 @@ module Statusable
 
     def define_status_method(status)
       class_eval do
-        define_method(status) do |url, header|
+        define_method(status) do |url: nil, header: {}|
           request_status_change(get_status_url(url), header)
         end
       end
@@ -42,6 +42,5 @@ module Statusable
         end
       end
     end
-
   end
 end
