@@ -8,7 +8,7 @@ module Relations
       class_eval do
         define_setter(relation_name, klass)
         define_getter(relation_name, klass)
-        define_namespace(options[:namespace]) if options.include?(:namespace)
+        define_namespace(relation_name.to_s) if options[namespace]
       end
     end
 
@@ -43,10 +43,10 @@ module Relations
       end
     end
 
-    def define_namespace(namespace)
+    def define_namespace(relation_name)
       define_method(:to_url) do
-        namespace_id = send("#{namespace}_id")
-        "#{namespace}/#{namespace_id}/#{super}"
+        namespace_id = send("#{relation_name}_id")
+        "#{relation_name.pluralize}/#{namespace_id}/#{super}"
       end
     end
 
