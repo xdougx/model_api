@@ -23,7 +23,7 @@ module Relations
 
     private 
 
-    def define_many_setter(relation_name, klass)
+    def define_many_setter(relation_name, klass)s
       define_method("#{relation_name}=") do |args|
         if args.is_a?(Array) && args.any?
           builded = args.map { |param| klass.build(param) }
@@ -45,12 +45,14 @@ module Relations
 
     def define_namespace(relation_name)
       define_singleton_method(:to_url) do |id|
-        "#{relation_name.pluralize}/#{id}/#{super}"
+        url = name.underscore.downcase.pluralize
+        "#{relation_name.pluralize}/#{id}/#{url}"
       end
 
       define_method(:to_url) do
         id = send("#{relation_name}_id")
-        "#{relation_name.pluralize}/#{id}/#{super}"
+        url = self.class.name.underscore.downcase.pluralize
+        "#{relation_name.pluralize}/#{id}/#{url}"
       end
     end
 
