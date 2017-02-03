@@ -44,7 +44,7 @@ module Relations
     end
 
     def define_namespace(relation_name)
-      define_method(:to_url) do
+      define_singleton_method(:to_url) do
         namespace_id = send("#{relation_name}_id")
         "#{relation_name.pluralize}/#{namespace_id}/#{super}"
       end
