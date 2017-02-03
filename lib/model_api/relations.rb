@@ -8,7 +8,7 @@ module Relations
       class_eval do
         define_setter(relation_name, klass)
         define_getter(relation_name, klass)
-        define_namespace(relation_name.to_s) if options[namespace]
+        define_namespace(relation_name.to_s) if options[:namespace]
       end
     end
 
