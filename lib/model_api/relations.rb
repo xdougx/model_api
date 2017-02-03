@@ -8,6 +8,7 @@ module Relations
       class_eval do
         define_setter(relation_name, klass)
         define_getter(relation_name, klass)
+        define_namespace(options[:namespace]) if options.include?(:namespace)
       end
     end
 
@@ -39,6 +40,13 @@ module Relations
         # list = instance_variable_get(:"@#{relation_name}")
         # list.empty? ? lazy_load(klass, self) : list
         instance_variable_get(:"@#{relation_name}")
+      end
+    end
+
+    def define_namespace(namespace)
+      define_method(:to_url) do
+        namespace_id = send("#{namespace}_id")
+        "#{namespace}/#{namespace_id}/#{super}"
       end
     end
 
