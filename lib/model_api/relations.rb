@@ -61,7 +61,7 @@ module Relations
       end
 
       define_singleton_method(:all_with_pagination) do |relation_id, params = {}, header = {}|
-        request = requester.new(:get, to_url, nil, params, header)
+        request = requester.new(:get, to_url(relation_id), nil, params, header)
         request.resource['objects'] = request.resource['objects'].map do |attrs|
           request.resource['objects'] = new(attrs)
         end
