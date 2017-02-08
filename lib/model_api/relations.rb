@@ -23,7 +23,7 @@ module Relations
 
     private 
 
-    def define_many_setter(relation_name, klass)s
+    def define_many_setter(relation_name, klass)
       define_method("#{relation_name}=") do |args|
         if args.is_a?(Array) && args.any?
           builded = args.map { |param| klass.build(param) }
@@ -53,6 +53,44 @@ module Relations
         id = send("#{relation_name}_id")
         url = self.class.name.underscore.downcase.pluralize
         "#{relation_name.pluralize}/#{id}/#{url}"
+      end
+
+      define_method(:all) do |relation_id, params = {}, header = {}|
+        request = requester.new(:get, to_url(relation_id), nil, params, header)
+        request.resource.map { |model| build(model) }
+      end
+
+      define_method(:all_with_pagination) do |relation_id, params = {}, header = {}|
+        request = requester.new(:get, to_url, nil, params, header)
+        request.resource['objects'] = request.resource['objects'].map do |attrs|
+          request.resource['objects'] = new(attrs)
+        end
+        request.resource
+      end
+
+      define_method(:create) do |relation_id, body, params = {}, header = {}|
+        request = requester.new(:post, to_url(relation_id), body, params, header)
+        build(request.resource)
+      end
+
+      define_method(:find_by) do |relation_id, attributes = {}, options = {}, header = {}|
+        search = { search: attributes }.merge!(options)
+        request = requester.new(:get, "#{to_url(relation_id)}/find_by", nil, search, header)
+        request.resource.map do |element|
+          build(element)
+        end
+      end
+
+      define_method(:find_by_name) do |relation_id, params, header = {}|
+        request = requester.new(:get, "#{to_url(relation_id)}/find_by_name", {}, params, header)
+        request.resource.map do |model|
+          build(model)
+        end
+      end
+
+      define_method(:find) do |relation_id, id, params = {}, header = {}|
+        request = requester.new(:get, "#{to_url(relation_id)}/#{id}", nil, params, header)
+        build(request.resource)
       end
     end
 
