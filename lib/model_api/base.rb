@@ -86,7 +86,7 @@ module ModelApi
 
     class << self
 
-      def define_namespace(name)
+      def set_namespace(name)
         class_eval do
           @@namespace = name
         end
