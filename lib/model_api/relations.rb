@@ -112,8 +112,6 @@ module Relations
       defined?(klass) ? klass.constantize : raise_class_not_defined(klass)
     end
 
-    def 
-
     def raise_class_not_defined(klass)
       fail "#{klass} isn't defined"
     end

@@ -113,7 +113,7 @@ module ModelApi
       # [GET] /model_pluralized
       # method to recovery all objects from an index
       def all(params = {}, header = {})
-        request = requester.new(:get, to_url, nil, params, header)
+        request = requester.new(:get, to_url, {}, params, header)
         request.resource.map do |model|
           build(model)
         end
@@ -130,7 +130,7 @@ module ModelApi
       #     }
       #   }
       def all_with_pagination(params = {}, header = {})
-        request = requester.new(:get, to_url, nil, params, header)
+        request = requester.new(:get, to_url, {}, params, header)
         request.resource['objects'] = request.resource['objects'].map do |attrs|
           request.resource['objects'] = new(attrs)
         end
@@ -148,7 +148,7 @@ module ModelApi
       # method to call find by attributes
       def find_by(attributes = {}, options = {}, header = {})
         search = { search: attributes }.merge!(options)
-        request = requester.new(:get, "#{to_url}/find_by", nil, search, header)
+        request = requester.new(:get, "#{to_url}/find_by", {}, search, header)
         request.resource.map do |element|
           build(element)
         end
@@ -166,7 +166,7 @@ module ModelApi
       # [GET] /model_pluralized/id
       # this method recover an object by id
       def find(id, params = {}, header = {})
-        request = requester.new(:get, "#{to_url}/#{id}", nil, params, header)
+        request = requester.new(:get, "#{to_url}/#{id}", {}, params, header)
         build(request.resource)
       end
 
