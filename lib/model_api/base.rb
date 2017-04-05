@@ -11,6 +11,8 @@ module ModelApi
 
     attr_accessor :created_at, :updated_at
 
+    @@namespace = nil
+
     # the requester is a proxy to the Requester Class
     REQUESTER = ModelApi::Requester
 
