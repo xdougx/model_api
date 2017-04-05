@@ -8,7 +8,7 @@ module Relations
       class_eval do
         define_setter(relation_name, klass)
         define_getter(relation_name, klass)
-        define_namespace(relation_name.to_s) if options[:namespace]
+        define_namespace(relation_name.to_s, options) if options[:namespace]
       end
     end
 
@@ -43,11 +43,12 @@ module Relations
       end
     end
 
-    def define_namespace(relation_name)
+    def define_namespace(relation_name, options = {})
       define_singleton_method(:to_url) do |id|
         url = name.underscore.downcase.pluralize
-        "#{relation_name.pluralize}/#{id}/#{url}"
+        "#{get_relation_class(relation_name, options).to_url}/#{id}/#{url}"
       end
+
 
       define_method(:to_url) do
         id = send("#{relation_name}_id")
@@ -110,6 +111,8 @@ module Relations
       klass = options[:class_name] ? options[:class_name] : relation_name.to_s.camelize.singularize
       defined?(klass) ? klass.constantize : raise_class_not_defined(klass)
     end
+
+    def 
 
     def raise_class_not_defined(klass)
       fail "#{klass} isn't defined"

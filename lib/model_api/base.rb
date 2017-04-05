@@ -99,6 +99,10 @@ module ModelApi
         end
       end
 
+      def define_namespace(name)
+        @@namespace = name
+      end
+
       # method to create an object and setup the attributes
       # that responds to, receive an hash as parameter
       def build(params)
@@ -168,7 +172,10 @@ module ModelApi
 
       # build the url name for the model
       def to_url
-        name.underscore.downcase.pluralize
+        url = name.underscore.downcase.pluralize
+        url = "#{@@namespace}/#{url}" if @@namespace.present?
+        url
+        
       end
 
       # build the url name for the model namespace
