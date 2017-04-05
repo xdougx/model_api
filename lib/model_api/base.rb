@@ -86,6 +86,12 @@ module ModelApi
 
     class << self
 
+      def define_namespace(name)
+        class_eval do
+          @@namespace = name
+        end
+      end
+
       def define_attributes(*attributes)
         class_eval do
           with_timestamp = attributes.clone
@@ -97,10 +103,6 @@ module ModelApi
             end
           end
         end
-      end
-
-      def define_namespace(name)
-        @@namespace = name
       end
 
       # method to create an object and setup the attributes
