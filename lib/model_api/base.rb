@@ -11,8 +11,6 @@ module ModelApi
 
     attr_accessor :created_at, :updated_at
 
-    @@namespace = nil
-
     # the requester is a proxy to the Requester Class
     REQUESTER = ModelApi::Requester
 
@@ -90,7 +88,7 @@ module ModelApi
 
       def set_namespace(name)
         class_eval do
-          @@namespace = name
+          define_singleton_method(:namespace) { name }
         end
       end
 
@@ -177,7 +175,7 @@ module ModelApi
       # build the url name for the model
       def to_url
         url = name.underscore.downcase.pluralize
-        url = "#{@@namespace}/#{url}" if @@namespace.present?
+        url = "#{namespace}/#{url}" if @@namespace.present?
         url
         
       end
