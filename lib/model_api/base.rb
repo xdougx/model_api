@@ -175,7 +175,7 @@ module ModelApi
       # build the url name for the model
       def to_url
         url = name.underscore.downcase.pluralize
-        url = "#{namespace}/#{url}" if @@namespace.present?
+        url = "#{namespace}/#{url}" if respond_to?(:namespace)
         url
         
       end
