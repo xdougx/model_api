@@ -174,10 +174,9 @@ module ModelApi
 
       # build the url name for the model
       def to_url
-        url = name.underscore.downcase.pluralize
+        url = name.demodulize.underscore.downcase.pluralize
         url = "#{namespace}/#{url}" if respond_to?(:namespace)
         url
-        
       end
 
       # build the url name for the model namespace

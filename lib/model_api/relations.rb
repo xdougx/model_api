@@ -45,14 +45,15 @@ module Relations
 
     def define_namespace(relation_name, options = {})
       define_singleton_method(:to_url) do |id|
-        url = name.underscore.downcase.pluralize
+        byebug
+        url = name.demodulize.underscore.downcase.pluralize
         "#{get_relation_class(relation_name, options).to_url}/#{id}/#{url}"
       end
 
 
       define_method(:to_url) do
         id = send("#{relation_name}_id")
-        url = self.class.name.underscore.downcase.pluralize
+        url = self.class.name.demodulize.underscore.downcase.pluralize
         "#{relation_name.pluralize}/#{id}/#{url}"
       end
 
