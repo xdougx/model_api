@@ -45,7 +45,6 @@ module Relations
 
     def define_namespace(relation_name, options = {})
       define_singleton_method(:to_url) do |id|
-        byebug
         url = name.demodulize.underscore.downcase.pluralize
         "#{get_relation_class(relation_name, options).to_url}/#{id}/#{url}"
       end
