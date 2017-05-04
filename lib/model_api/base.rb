@@ -86,7 +86,7 @@ module ModelApi
 
     class << self
 
-      def set_namespace(name)
+      def set_namespace(name, options = {})
         class_eval do
           define_singleton_method(:namespace) { name }
         end

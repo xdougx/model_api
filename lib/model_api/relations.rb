@@ -74,6 +74,11 @@ module Relations
         build(request.resource)
       end
 
+      define_singleton_method(:update) do |relation_id, body, params = {}, header = {}|
+        request = requester.new(:put, "#{to_url(relation_id)}/#{id}", body, params, header)
+        build(request.resource)
+      end
+
       define_singleton_method(:find_by) do |relation_id, attributes = {}, options = {}, header = {}|
         search = { search: attributes }.merge!(options)
         request = requester.new(:get, "#{to_url(relation_id)}/find_by", nil, search, header)
