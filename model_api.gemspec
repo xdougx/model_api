@@ -23,6 +23,6 @@ Gem::Specification.new do |spec|
 
   spec.add_runtime_dependency 'rest-client'
   spec.add_runtime_dependency 'activemodel'
-  spec.add_runtime_dependency 'activesupport', '5.0.1'
+  spec.add_runtime_dependency 'activesupport', '>= 5.0.1'
   spec.add_runtime_dependency 'json'
 end
