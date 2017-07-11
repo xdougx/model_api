@@ -21,6 +21,8 @@ module ModelApi
     # `header` is the http request header
     attr_accessor(:header)
     # `@@session_token` is the current user token session
+    attr_accessor(:session_token)
+
     @@session_token = ""
 
     # construct and execute a new request
@@ -29,6 +31,7 @@ module ModelApi
       @path = path
       @body = body
       @params = params
+      @session_token = ModelApi::Requester.session_token
       setup_header(header)
       run
       valid?
@@ -99,7 +102,7 @@ module ModelApi
 
     def setup_header(header = {})
       @header = { Authorization: auth, content_type: :json, accept: :json }
-      @header["Session-Token"] = @@session_token unless @@session_token.blank?
+      @header["Session-Token"] = session_token unless session_token.blank?
       @header.merge!(header) if !header.empty? or header.blank?
       @header
     end
