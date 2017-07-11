@@ -20,6 +20,8 @@ module ModelApi
     attr_accessor(:result)
     # `header` is the http request header
     attr_accessor(:header)
+    # `@@session_token` is the current user token session
+    @@session_token = ""
 
     # construct and execute a new request
     def initialize(method, path, body = {}, params = {}, header = {})
@@ -31,6 +33,11 @@ module ModelApi
       run
       valid?
     end
+
+    class << self
+      attr_accessor :session_token
+    end
+
 
     protected
 
@@ -92,6 +99,7 @@ module ModelApi
 
     def setup_header(header = {})
       @header = { Authorization: auth, content_type: :json, accept: :json }
+      @header["Session-Token"] = @@session_token unless @@session_token.blank?
       @header.merge!(header) if !header.empty? or header.blank?
       @header
     end
